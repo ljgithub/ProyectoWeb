@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div>
+    <div style="width:50%; margin: auto" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="exampleModalLabel" style="margin: auto">Tus compras</h5>
+            </div>
+            <div>
+                <table class="table" style="color: #1b1e21; margin: auto; width: 80%">
+                    {% csrf_token %}
+                    <thead class="thead-light">
+                    <tr>
+                        <th colspan="4" class="text-center">Lista de productos</th>
+                    </tr>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th></th>
+                        <th>Subtotal</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if request.session.cart.items %}
+                    {% for key, value in request.session.cart.items %}
+                    <tr class="text-center">
+                        <td style="width:15em; text-align: left;">
+                            {{ value.nombre_producto }}
+                        </td>
+                        <td>
+                            {{ value.cantidad_producto }}
+                        </td>
+                        <td>
+                            <a href="{% url 'cartURL:agregar' value.producto_id %}" class="btn btn-sm btn-success">+</a>
+                            <a href="{% url 'cartURL:restar' value.producto_id %}" class="btn btn-sm btn-success">-</a>
+                        </td>
+                        <td>
+                            $ {{ value.precio_producto }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="4">
+                            <div class="alert alert-danger text-center">Tu lista no tiene productos aún</div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="4" style="text-align:right;">
+                            Total: $ {{importe_total_cart}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" >
+                            <div id="smart-button-container" style="width:55%; margin: auto">
+                                <div style="text-align: center;">
+                                    <div id="paypal-button-container"></div>
+                                </div>
+                            </div>
+                            <script src="https://www.paypal.com/sdk/js?client-id={{ ppclient }}"
+                                    data-sdk-integration-source="button-factory"></script>
+                            <script>
+                                var totalPayment = "{{importe_total_cart}}";
+                                totalPayment = totalPayment.replace(',', '.')
+                                initPayPalButton(totalPayment);
+                            </script>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <a href="{% url 'cartURL:limpiar' %}" class="btn btn-secondary" data-dismiss="modal"
+                   style="color: white">Limpiar Cesta</a>
+                <a href="{% url 'Tienda' %}" class="btn btn-primary" style="color: white">Volver a la Tienda</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

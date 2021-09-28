@@ -1,0 +1,57 @@
+﻿{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+    {% include "cart/widget.html" %}
+
+    <div id="gridProducto" >
+
+        {% for item in lista_productos %}
+        <div class="card" id="cardProducto">
+
+            <table >
+                <tr>
+                    <td>
+                        <div style="text-align: left">
+                            <p class="d-flex justify-content-between total font-weight-bold mt-2 ms-1">Modelo: {{ item.autor }}</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="text-align: right; margin-right:10px">
+                            <a href="{% url 'cartURL:agregar' item.id %}" class="btn btn-primary">Comprar</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr >
+                    <div>
+                        <td colspan="2"><img src="{{ item.imagen.url }}" alt=""  ></td>
+                    </div>
+                </tr>
+                <tr>
+                    <div>
+                        <td colspan="2">
+                            <div style="margin-left:10px; margin-right:10px;">
+                                <div style="color: #721c24">Descripción</div>
+                                <div>{{ item.descripcion }}</div>
+                            </div>
+                        </td>
+                    </div>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    <div style="margin-left:10px; margin-right:10px;" >
+                        <div class="d-flex justify-content-between p-price mt-2 mb-3"><span>{{ item.nombre }}</span><span>${{ item.precio }}</span></div>
+                    </div>
+                </td></tr>
+            </table>
+        </div>
+
+        {% endfor %}
+
+
+    </div>
+
+{% endblock %}

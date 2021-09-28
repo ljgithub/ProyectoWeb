@@ -1,0 +1,71 @@
+﻿{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+    table{
+        background-color: #f8f8f8;
+        
+    }
+    
+     tr,td{
+        border: 1px solid black;
+         padding: 20px;
+    }
+     
+    #contenedor {
+        margin: auto;
+        font-family: "Franklin Gothic Book";
+    } 
+</style>
+
+<!--
+<h3 style="text-align: right; color: red">Servicios brindados</h3>
+-->
+
+<!--
+<div>
+    <h3 style="color: red; text-align: right">Nuestros Servicios</h3>
+    
+    <table id="contenedor">
+        <tr>
+            <td style="text-align: center; color: #3875d7 ;text-transform: uppercase;" >Servicio</td>
+            <td style="text-align: center; color: #3875d7; text-transform: uppercase;">Contenido</td>
+            <td style="text-align: center; color: #3875d7; text-transform: uppercase;">Imagen</td>
+        </tr>
+        {% for item in listaServicios  %}
+        <tr>
+            <td>{{item.titulo}}</td>
+            <td>{{item.contenido}}</td>
+            <td><img src="{{ item.imagen.url }}" alt="" width="100"> </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+    
+</div>
+-->
+
+
+<!-- Heading -->
+{% for item in listaServicios  %}
+<section class="page-section clearfix">
+    <div class="container">
+        <div class="intro">
+            <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{{ item.imagen.url }}" alt="" style=" mso-page-scale: 50%">
+            <div class="intro-text left-0 text-center bg-faded p-5 rounded" >
+                <h2 class="section-heading mb-4" >
+                    <span class="section-heading-lower">{{ item.titulo }}</span>
+                </h2>
+                <p class="mb-3">{{ item.contenido }}
+                </p>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endfor %}
+
+{% endblock %}
